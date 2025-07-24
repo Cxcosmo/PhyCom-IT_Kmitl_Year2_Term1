@@ -4,9 +4,7 @@ int main(){
     char grade;
 
     scanf("%c", &grade);
-    if (grade >= 97){
-        grade -= 32;
-    }
+    grade -= grade >= 97 ? 32 : 0;
     switch (grade){
         case 'A':
             printf("Genius");
@@ -26,4 +24,6 @@ int main(){
         default :
             printf("Invalid Input");
     }
+
+    return 0;
 }
