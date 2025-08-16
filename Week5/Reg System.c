@@ -22,7 +22,6 @@ int main(){
         h_sum += h;
         w_sum += w;
     }
-
     printf("Age >= 20 and Height >= 160: %d\n", c1);
     printf("Age < 20 and Height <= 180 or Weight >= 60: %d\n", c2);
     printf("Age >= 30 and Weight >= 40 and Weight <= 80: %d\n", c3);

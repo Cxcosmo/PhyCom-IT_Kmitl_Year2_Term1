@@ -12,4 +12,6 @@ int main(){
     min = sec / 60;
     sec %= 60;
     printf("%d s = %d d %d h %d m %d s", s, day, hour, min, sec);
+
+    return 0;
 }
