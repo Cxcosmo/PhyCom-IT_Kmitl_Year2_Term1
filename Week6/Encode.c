@@ -1,15 +1,8 @@
 #include <stdio.h>
 #include <ctype.h>
 
-int decrypt(int j){
-    if (j + 5 > 25){ return j - 21; }
-    return j + 5;
-}
-
-int encrypt(int j){
-    if (j - 5 < 0){ return j + 21; }
-    return j - 5;
-}
+int decrypt(int j);
+int encrypt(int j);
 
 int main(){
     char plaintext[201], chr[] = "abxypqrmncedkljoshtufvzgwi";
@@ -32,4 +25,14 @@ int main(){
     }
 
     return 0;
+}
+
+int decrypt(int j){
+    if (j + 5 > 25){ return j - 21; }
+    return j + 5;
+}
+
+int encrypt(int j){
+    if (j - 5 < 0){ return j + 21; }
+    return j - 5;
 }
