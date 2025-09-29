@@ -54,7 +54,7 @@ void displayDigit(int digit, int activeSegment) {
 }
 
 void loop() {
-  // Loop through each digit (0-9)
+  // Loop through each digit (0-9)  
   for (int digit = 0; digit < strlen(number); digit += 2) {
     for (int time = 0; time < 200; time++){
       displayDigit(number[digit] - '0', 1);
