@@ -13,7 +13,7 @@ int main(){
     int n;
     scanf(" %d", &n);
 
-    struct Record people[n];
+    Record people[n];
     for (int i = 0; i < n; i++){
         scanf("%s %s %ld %ld", people[i].id, people[i].name, &people[i].salary, &people[i].sales);
     }

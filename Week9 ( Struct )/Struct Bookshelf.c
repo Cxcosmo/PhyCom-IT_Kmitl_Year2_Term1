@@ -12,7 +12,7 @@ int main(){
     int n;
     scanf(" %d", &n);
 
-    struct Book book[n];
+    Book book[n];
     char id[10];
     int state = 1;
 

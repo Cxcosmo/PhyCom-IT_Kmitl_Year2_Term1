@@ -13,7 +13,7 @@ typedef struct Student{
 } Student;
 
 int main(){
-    struct Student student[20];
+    Student student[20];
     char sex[7], select[8];
 
     for (int i = 0; i < 20; i++){
@@ -27,7 +27,7 @@ int main(){
         a++;
     }
     for (int j = 0; j < 20; j++){
-        struct Student student_save = student[j];
+        Student student_save = student[j];
         int m = j;
         for (int k = j; k < 20; k++){
             if (!strcmp(select, "name")){

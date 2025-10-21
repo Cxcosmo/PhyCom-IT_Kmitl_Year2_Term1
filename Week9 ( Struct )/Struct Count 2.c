@@ -10,7 +10,7 @@ typedef struct countWord {
 } countWord;
 
 int main(){
-    struct countWord cw = {0, 0, 0};
+    countWord cw = {0, 0, 0};
     char text[451];
 
     while (1){

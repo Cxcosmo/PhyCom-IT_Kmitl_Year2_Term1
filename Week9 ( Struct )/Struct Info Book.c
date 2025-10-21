@@ -12,7 +12,7 @@ typedef struct Student{
 } Student;
 
 int main(){
-    struct Student s;
+    Student s;
     char sex[5];
 
     scanf("%s %s %s %d %s %f", s.name, s.surname, s.sex, &s.age, s.id, &s.grade);
