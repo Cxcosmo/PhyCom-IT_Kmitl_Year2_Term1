@@ -43,7 +43,7 @@ SinglyLinkedList* createSinglyLinkedList() {
 
 // Traverse the list and print data
 void traverse(SinglyLinkedList* list) {
-    if (list->count == 0) {
+    if (!list->count) {
         printf("This is an empty list.\n");
         return;
     }
@@ -82,42 +82,46 @@ void insert_front(SinglyLinkedList* list, char* data) {
 
 // Delete a node
 void delete(struct SinglyLinkedList* list, char* data) {
-    if (list->count == 0){
+    if (!list->count){
         printf("Cannot delete, %s does not exist.\n", data);
         return;
     }
     DataNode* current = list->head;
     DataNode* previous = NULL;
-    int check = 1;
 
     if (previous == NULL && !strcmp(current->data, data)){
         list->head = current->next;
-        check--;
-    } else {
-        while (current->next != NULL){
-            if (!strcmp(current->data, data)){
-                previous->next = current->next;
-                check--;
-                break ;
-            }
-            previous = current;
-            current = current->next;
-        }
-        if (check && !strcmp(current->data, data)){
-            previous->next = NULL;
-            check--;
-        }
-    }
 
-    if (check){
-        printf("Cannot delete, %s does not exist.\n", data);
+        free(current->data);
+        free(current);
+        list->count--;
+
+        return;
+    }
+    while (current->next != NULL){
+        if (!strcmp(current->data, data)){
+            previous->next = current->next;
+
+            free(current->data);
+            free(current);
+            list->count--;
+
+            return;
+        }
+        previous = current;
+        current = current->next;
+    }
+    if (!strcmp(current->data, data)){
+        previous->next = NULL;
+
+        free(current->data);
+        free(current);
+        list->count--;
+
         return;
     }
 
-    free(current->data);
-    free(current);
-
-    list->count--;
+    printf("Cannot delete, %s does not exist.\n", data);
 }
 
 int main() {
