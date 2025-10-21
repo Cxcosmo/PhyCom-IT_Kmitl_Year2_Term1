@@ -55,7 +55,11 @@ void insert_last(SinglyLinkedList* list, char* data) {
 }
 
 void indexing(SinglyLinkedList *list, int index){
-    if (!list->count || index - 1 > list->count){
+    if (index < 0){
+        index += list->count;
+    }
+
+    if (!list->count || index + 1 > list->count || index < 0){
         printf("Error");
         return;
     }
@@ -68,12 +72,17 @@ void indexing(SinglyLinkedList *list, int index){
             printf("%s", current->data);
             return;
         }
+        current = current->next;
+        current_index++;
+    }
+    if (current_index == index){
+        printf("%s", current->data);
     }
 }
 
 int main(){
-    SinglyLinkedList* myList = createSinglyLinkedList();
-    char word[21];
+    SinglyLinkedList* mylist = createSinglyLinkedList();
+    char *word = (char*)malloc(21 * sizeof(char));
     int index_find;
 
     while (1){
@@ -81,8 +90,21 @@ int main(){
         if (!strcmp(word, "Last")){
             break;
         }
-        insert_last(myList, word);
+        insert_last(mylist, word);
     }
     scanf(" %d", &index_find);
+    indexing(mylist, index_find);
 
+    DataNode *current = mylist->head;
+    while (current != NULL) {
+        free(current->data);
+        DataNode* temp = current;
+        current = current->next;
+        free(temp);
+    }
+
+    free(mylist);
+    free(word);
+
+    return 0;
 }
