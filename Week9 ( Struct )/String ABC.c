@@ -2,18 +2,24 @@
 #include <string.h>
 
 int main(){
-    char text[201], text_sort[201];
+    char text[201];
     int i = 0;
 
     scanf(" %[^\n]", text);
     while (text[i] != '\0'){
         int j = i;
-        while (j > 0 && text_sort[j - 1] > text[i]){
-            text_sort[j--] = text_sort[j - 1];
+        char s = j, swap = text[i];
+        while (text[j] != '\0'){
+            if (text[j] < text[s]){
+                s = j;
+            }
+            j++;
         }
-        text_sort[j] = text[i++];
+        text[i] = text[s];
+        text[s] = swap;
+        i++;
     }
-    printf("%s", text_sort);
+    printf("%s", text);
 
     return 0;
 }
