@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct Book {
+typedef struct Book {
     char id[10];
     char name[100];
     char author[100];
-};
+} Book;
 
 int main(){
     int n;

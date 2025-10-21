@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct Weather {
+typedef struct Weather {
     char outlook[9];
     int temperature;
     int humidity;
     char wind;
-};
+} Weather;
 
 void playing_decision(struct Weather *w){
     if(!strcmp(w->outlook, "overcast")){

@@ -3,11 +3,11 @@
 #include <string.h>
 #include <ctype.h>
 
-struct countWord {
+typedef struct countWord {
     int chr;
     int word;
     int line;
-};
+} countWord;
 
 int main(){
     struct countWord cw = {0, 0, 0};

@@ -3,17 +3,17 @@
 #include <string.h>
 #include <ctype.h>
 
-struct student{
+typedef struct Student{
     char name[61];
     char surname[61];
     char sex[5];
     int age;
     char id[13];
     float grade;
-};
+} Student;
 
 int main(){
-    struct student student[20];
+    struct Student student[20];
     char sex[7], select[8];
 
     for (int i = 0; i < 20; i++){
@@ -27,7 +27,7 @@ int main(){
         a++;
     }
     for (int j = 0; j < 20; j++){
-        struct student student_save = student[j];
+        struct Student student_save = student[j];
         int m = j;
         for (int k = j; k < 20; k++){
             if (!strcmp(select, "name")){

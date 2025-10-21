@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct Record {
+typedef struct Record {
     char id[10];
     char name[100];
     long salary;
     long sales;
-};
+} Record;
 
 int main(){
     int n;

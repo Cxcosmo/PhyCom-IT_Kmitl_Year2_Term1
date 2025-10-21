@@ -2,17 +2,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct student{
+typedef struct Student{
     char name[61];
     char surname[61];
     char sex[7];
     int age;
     char id[13];
     float grade;
-};
+} Student;
 
 int main(){
-    struct student s;
+    struct Student s;
     char sex[5];
 
     scanf("%s %s %s %d %s %f", s.name, s.surname, s.sex, &s.age, s.id, &s.grade);
