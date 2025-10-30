@@ -1,0 +1,10 @@
+Library Name
+----------------
+- MQTT
+- LiquidCrystal_I2C.h
+
+--------------------------------
+
+Boards Manager
+----------------
+- UNO R4
