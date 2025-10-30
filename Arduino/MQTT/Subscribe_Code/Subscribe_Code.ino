@@ -12,7 +12,7 @@ const char WIFI_PASSWORD[] = "Password";  // CHANGE TO YOUR WIFI PASSWORD
 
 const char MQTT_BROKER_ADRRESS[] = "phycom.it.kmitl.ac.th";  // CHANGE TO MQTT BROKER'S ADDRESS
 const int MQTT_PORT = 1883;
-const char MQTT_CLIENT_ID[] = "67070066";  // CHANGE IT AS YOU DESIRE
+const char MQTT_CLIENT_ID[] = "YourID";  // CHANGE IT AS YOU DESIRE
 const char MQTT_USERNAME[] = "";              // CHANGE IT IF REQUIRED, empty if not required
 const char MQTT_PASSWORD[] = "";              // CHANGE IT IF REQUIRED, empty if not required
 
