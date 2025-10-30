@@ -16,18 +16,27 @@ const char MQTT_CLIENT_ID[] = "YourID";  // CHANGE IT AS YOU DESIRE
 const char MQTT_USERNAME[] = "";              // CHANGE IT IF REQUIRED, empty if not required
 const char MQTT_PASSWORD[] = "";              // CHANGE IT IF REQUIRED, empty if not required
 
-// The MQTT topics that Arduino should publish/subscribe
-const char PUBLISH_TOPIC[] = "67070066/temp";       // CHANGE IT AS YOU DESIRE
+const char SUBSCRIBE_TOPIC[] = "67070066/venus";  // CHANGE IT AS YOU DESIRE
 
-const int PUBLISH_INTERVAL = 2000;  // 2 seconds
+const int PUBLISH_INTERVAL = 5000;  // 5 seconds
 
 WiFiClient network;
 MQTTClient mqtt = MQTTClient(256);
 
 unsigned long lastPublishTime = 0;
 
+// กำหนดพอร์ตสำหรับ LED RGB
+const int RED_PIN = 4;    // ขา Red
+const int GREEN_PIN = 5;  // ขา Green
+const int BLUE_PIN = 6;   // ขา Blue
+
 void setup() {
   Serial.begin(9600);
+
+  // กำหนดพอร์ตให้เป็น OUTPUT
+  pinMode(RED_PIN, OUTPUT);
+  pinMode(GREEN_PIN, OUTPUT);
+  pinMode(BLUE_PIN, OUTPUT);
 
   int status = WL_IDLE_STATUS;
   while (status != WL_CONNECTED) {
@@ -48,16 +57,14 @@ void setup() {
 
 void loop() {
   mqtt.loop();
-
-  if (millis() - lastPublishTime > PUBLISH_INTERVAL) {
-    sendToMQTT();
-    lastPublishTime = millis();
-  }
 }
 
 void connectToMQTT() {
   // Connect to the MQTT broker
   mqtt.begin(MQTT_BROKER_ADRRESS, MQTT_PORT, network);
+
+  // Create a handler for incoming messages
+  mqtt.onMessage(messageReceived);
 
   Serial.print("Arduino UNO R4 - Connecting to MQTT broker");
 
@@ -72,17 +79,37 @@ void connectToMQTT() {
     return;
   }
 
+  // Subscribe to a topic, the incoming messages are processed by messageHandler() function
+  if (mqtt.subscribe(SUBSCRIBE_TOPIC))
+    Serial.print("Arduino UNO R4 - Subscribed to the topic: ");
+  else
+    Serial.print("Arduino UNO R4 - Failed to subscribe to the topic: ");
+
+  Serial.println(SUBSCRIBE_TOPIC);
   Serial.println("Arduino UNO R4 - MQTT broker Connected!");
 }
 
-void sendToMQTT() {
-  int sensorValue = analogRead(A0);
-  float voltage = sensorValue * (5.0 / 1023.0); // แปลงค่า Analog เป็น Voltage
-  float temperatureC = ((voltage - 0.5) / 0.01) - 8; // แปลง Voltage เป็น อุณหภูมิ (Celsius)
-
-  Serial.print("Temperature: ");
-  Serial.print(temperatureC);
-  Serial.println(" C");
-
-  mqtt.publish(PUBLISH_TOPIC, String(temperatureC));  //publish to mqtt
+void LED(int red, int green, int blue){
+  digitalWrite(RED_PIN, red);
+  digitalWrite(GREEN_PIN, green);
+  digitalWrite(BLUE_PIN, blue);
 }
+
+void messageReceived(String &topic, String &payload) {
+  Serial.println("Payload: " + payload);
+
+  float num = payload.toFloat();
+
+  if (10 <= num && num <= 25){
+    LED(HIGH, LOW, HIGH);
+  } else if (26 <= num && num <= 35){
+    LED(HIGH, HIGH, LOW);
+  } else if (36 <= num && num <= 50){
+    LED(LOW, HIGH, HIGH);
+  } else {
+    LED(HIGH, HIGH, HIGH);
+  }
+  
+  delay(1000);
+}
+

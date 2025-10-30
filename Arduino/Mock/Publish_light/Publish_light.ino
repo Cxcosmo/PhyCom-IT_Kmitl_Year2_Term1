@@ -17,7 +17,7 @@ const char MQTT_USERNAME[] = "";              // CHANGE IT IF REQUIRED, empty if
 const char MQTT_PASSWORD[] = "";              // CHANGE IT IF REQUIRED, empty if not required
 
 // The MQTT topics that Arduino should publish/subscribe
-const char PUBLISH_TOPIC[] = "67070066/temp";       // CHANGE IT AS YOU DESIRE
+const char PUBLISH_TOPIC[] = "67070066/light";       // CHANGE IT AS YOU DESIRE
 
 const int PUBLISH_INTERVAL = 2000;  // 2 seconds
 
@@ -76,13 +76,10 @@ void connectToMQTT() {
 }
 
 void sendToMQTT() {
-  int sensorValue = analogRead(A0);
-  float voltage = sensorValue * (5.0 / 1023.0); // แปลงค่า Analog เป็น Voltage
-  float temperatureC = ((voltage - 0.5) / 0.01) - 8; // แปลง Voltage เป็น อุณหภูมิ (Celsius)
+  int potValue = analogRead(A0);
 
-  Serial.print("Temperature: ");
-  Serial.print(temperatureC);
-  Serial.println(" C");
+  Serial.print("Value: ");
+  Serial.println(potValue);
 
-  mqtt.publish(PUBLISH_TOPIC, String(temperatureC));  //publish to mqtt
+  mqtt.publish(PUBLISH_TOPIC, String(potValue));  //publish to mqtt
 }

@@ -1,7 +1,7 @@
 // กำหนดพอร์ตสำหรับ LED RGB
-const int RED_PIN = 6;    // ขา Red
-const int BLUE_PIN = 7;   // ขา Blue
-const int GREEN_PIN = 8;  // ขา Green
+const int RED_PIN = 4;    // ขา Red
+const int GREEN_PIN = 5;  // ขา Green
+const int BLUE_PIN = ;   // ขา Blue
 
 void setup() {
   // กำหนดพอร์ตให้เป็น OUTPUT

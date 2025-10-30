@@ -17,7 +17,7 @@ const char MQTT_USERNAME[] = "";              // CHANGE IT IF REQUIRED, empty if
 const char MQTT_PASSWORD[] = "";              // CHANGE IT IF REQUIRED, empty if not required
 
 // The MQTT topics that Arduino should publish/subscribe
-const char PUBLISH_TOPIC[] = "67070066/temp";       // CHANGE IT AS YOU DESIRE
+const char PUBLISH_TOPIC[] = "67070066/food";       // CHANGE IT AS YOU DESIRE
 
 const int PUBLISH_INTERVAL = 2000;  // 2 seconds
 
@@ -26,8 +26,13 @@ MQTTClient mqtt = MQTTClient(256);
 
 unsigned long lastPublishTime = 0;
 
+const int trigPin = 4;
+const int echoPin = 2;
+
 void setup() {
   Serial.begin(9600);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
 
   int status = WL_IDLE_STATUS;
   while (status != WL_CONNECTED) {
@@ -76,13 +81,26 @@ void connectToMQTT() {
 }
 
 void sendToMQTT() {
-  int sensorValue = analogRead(A0);
-  float voltage = sensorValue * (5.0 / 1023.0); // แปลงค่า Analog เป็น Voltage
-  float temperatureC = ((voltage - 0.5) / 0.01) - 8; // แปลง Voltage เป็น อุณหภูมิ (Celsius)
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
 
-  Serial.print("Temperature: ");
-  Serial.print(temperatureC);
-  Serial.println(" C");
+  long duration;
+  int distanceCm, distanceInch;
+  
+  // Read the echoPin, return the sound wave travel time in microseconds
+  duration = pulseIn(echoPin, HIGH);
+  
+  // Calculate the distance in cm and inches
+  distanceCm = duration * 0.034 / 2;
+  distanceInch = duration * 0.0133 / 2;
+  Serial.print("Distance: ");
+  Serial.print(distanceCm);
+  Serial.println(" cm");
 
-  mqtt.publish(PUBLISH_TOPIC, String(temperatureC));  //publish to mqtt
+  if (distanceCm > 20){
+    mqtt.publish(PUBLISH_TOPIC, "off");  //publish to mqtt
+  } else {
+    mqtt.publish(PUBLISH_TOPIC, "on");  //publish to mqtt
+  }
 }
